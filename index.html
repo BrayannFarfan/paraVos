@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ff6f9c">
+<title>Un mensaje para vos ❤️</title>
+<style>
+:root{--pink:#ff6f9c;--deep:#8d2148;--cream:#fff7fa}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#54243a;background:radial-gradient(circle at top,#ffe0ec,#fff7fa 55%,#ffeaf2);overflow-x:hidden}
+main{width:min(720px,92vw);margin:0 auto;padding:28px 0 48px;text-align:center;position:relative;z-index:1}
+.card{background:#ffffffdc;border:1px solid #ffd0df;border-radius:28px;padding:clamp(22px,5vw,42px);box-shadow:0 16px 55px #a92c581c}
+.eyebrow{letter-spacing:.16em;text-transform:uppercase;font-size:.75rem;color:#b54c75;font-weight:700}
+h1{font-size:clamp(2rem,7vw,3.4rem);line-height:1.05;color:var(--deep);margin:12px 0 20px}
+p{font-size:clamp(1rem,3vw,1.15rem);line-height:1.8;margin:14px 0}
+.heart{font-size:3rem;animation:pulse 1.6s infinite;display:inline-block}
+button{border:0;border-radius:999px;background:var(--pink);color:white;font-size:1rem;font-weight:700;padding:14px 22px;cursor:pointer;box-shadow:0 8px 20px #ff6f9c45;margin:8px 4px}
+button.secondary{background:#fff;color:var(--deep);border:1px solid #ffc3d6;box-shadow:none}
+.signature{font-weight:800;color:var(--deep);font-size:1.2rem;margin-top:24px}
+.note{font-size:.85rem;color:#9c6178}
+#hearts{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.floating{position:absolute;bottom:-50px;animation:rise linear forwards;opacity:.75}
+@keyframes rise{to{transform:translateY(-115vh) rotate(25deg);opacity:0}}
+@keyframes pulse{50%{transform:scale(1.12)}}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div id="hearts" aria-hidden="true"></div>
+<main>
+ <div class="card">
+  <div class="eyebrow">Abrí esto cuando necesites recordar algo</div>
+  <div class="heart">❤️</div>
+  <h1>Mi amor, no dejes de brillar</h1>
+  <p>Quiero que te acuerdes de algo: <strong>estoy orgulloso de vos</strong> y de cada paso que te animás a dar.</p>
+  <p>No midas tu valor por la cantidad de personas que están mirando hoy. Cada persona que llega cuenta, cada intento te enseña algo y cada live es una oportunidad para crecer.</p>
+  <p>Todos empiezan desde algún lugar. No tenés que hacerlo perfecto; solo seguir aprendiendo, ser vos misma y darte la oportunidad de llegar a donde soñás.</p>
+  <p>Si hoy cuesta, respirá, sonreí y seguí a tu ritmo. No estás sola en este camino. Yo creo en vos, en tu esfuerzo y en todo lo lindo que podés construir.</p>
+  <p class="signature">Estoy con vos, hoy y siempre. Te amo. 💖</p>
+  <button id="musicBtn" type="button">🎵 Activar música suave</button>
+  <button class="secondary" id="heartBtn" type="button">💗 Mandame un corazón</button>
+  <p id="response" class="hidden">Ese corazón llegó directo a mi corazón. ❤️</p>
+  <p class="note">Un recordatorio para vos: tu esfuerzo vale, incluso en los días difíciles.</p>
+ </div>
+</main>
+<audio id="music" loop preload="none">
+  <source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_946b6a3f7c.mp3?filename=romantic-piano-124342.mp3" type="audio/mpeg">
+</audio>
+<script>
+const container=document.getElementById('hearts');
+function floatHeart(){
+ const e=document.createElement('span');e.className='floating';
+ e.textContent=['💗','💕','❤️','✨'][Math.floor(Math.random()*4)];
+ e.style.left=Math.random()*100+'vw';e.style.fontSize=(16+Math.random()*24)+'px';
+ e.style.animationDuration=(7+Math.random()*7)+'s';container.appendChild(e);
+ setTimeout(()=>e.remove(),15000);
+}
+for(let i=0;i<12;i++)setTimeout(floatHeart,i*350);
+setInterval(floatHeart,850);
+const music=document.getElementById('music'), musicBtn=document.getElementById('musicBtn');
+musicBtn.addEventListener('click',async()=>{
+ try{
+  if(music.paused){await music.play();musicBtn.textContent='⏸️ Pausar música';}
+  else{music.pause();musicBtn.textContent='🎵 Activar música suave';}
+ }catch(e){musicBtn.textContent='La música no se pudo cargar';}
+});
+document.getElementById('heartBtn').addEventListener('click',()=>{
+ document.getElementById('response').classList.remove('hidden');
+ for(let i=0;i<15;i++)setTimeout(floatHeart,i*100);
+});
+</script>
+</body>
+</html>
